@@ -10,25 +10,40 @@
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="368dp"
-            android:layout_height="495dp" tools:layout_editor_absoluteY="8dp" tools:layout_editor_absoluteX="8dp">
+            android:layout_height="495dp" tools:layout_editor_absoluteY="8dp"
+            tools:layout_editor_absoluteX="8dp"
+            android:padding="16dp">
         <TextView
                 android:text="ALTERAR DADOS"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/textView" android:textSize="24sp"
-                android:textStyle="bold"/>
-        <EditText
+                android:textStyle="bold"
+                android:gravity="center"/>
+        <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/etValor"/>
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="x:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/tvLabel"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/etValor"
+            />
+        </LinearLayout>
         <Button
                 android:text="ALTERAR"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/btnAlterar"/>
+                android:layout_height="wrap_content" android:id="@+id/btnAlterar"
+                android:gravity="center"/>
         <Button
                 android:text="CANCELAR"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/btnCancelar"/>
+                android:layout_height="wrap_content" android:id="@+id/btnCancelar"
+                android:gravity="center"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

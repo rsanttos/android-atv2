@@ -8,6 +8,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    var peso: Float = 0.0F
+    var altura: Float = 0.0F
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -15,59 +18,65 @@ class MainActivity : AppCompatActivity() {
         btnAltura.setOnClickListener{
             var newIntent = Intent(this, AlterarDadosActivity::class.java)
             newIntent.putExtra("VARIAVEL", "ALTURA")
-            startActivity(newIntent)
+            startActivityForResult(newIntent, 1)
         }
 
         btnPeso.setOnClickListener {
             var newIntent = Intent(this, AlterarDadosActivity::class.java)
             newIntent.putExtra("VARIAVEL", "PESO")
-            //startActivityForResult(newIntent, 1)
-            startActivity(newIntent)
+            startActivityForResult(newIntent, 1)
         }
 
         btnCalcular.setOnClickListener {
-
+            calculaImc()
         }
 
-        //initialize()
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        Log.v("exercicio-ac1-valor", "chamou aqui")
-
         super.onActivityResult(requestCode, resultCode, data)
-    }
 
-    fun initialize(){
+        var alturaTmp = data?.getStringExtra("VALOR_ALTURA")
+        var pesoTmp = data?.getStringExtra("VALOR_PESO")
 
-        var pesoStr: String?
-        var alturaStr: String?
-
-        pesoStr = this.intent.getStringExtra("VALOR_PESO")
-        alturaStr = intent.getStringExtra("VALOR_ALTURA")
-        if(pesoStr != null) {
-            Log.v("exercicio-ac1-valor", pesoStr)
-        }
-        if(alturaStr != null) {
-            Log.v("exercicio-ac1-valor", alturaStr)
+        if(alturaTmp != null) {
+            tvAltura.text = "Altura: $alturaTmp m"
+            altura = alturaTmp.toFloat()
         }
 
-        var peso = intent.getIntExtra("VALOR_PESO", 0)
-        var altura = intent.getFloatExtra("VALOR_ALTURA", 0.0F)
+        if(pesoTmp != null) {
+            tvPeso.text = "Peso: $pesoTmp kg"
+            peso = pesoTmp.toFloat()
+        }
 
-        var pesoTxt = "Peso: $peso kg"
-        var alturaTxt = "Altura: $altura m"
-
-        tvPeso.text = pesoTxt
-        tvAltura.text = alturaTxt
-
+        Log.v("imc-ex-peso", peso.toString())
+        Log.v("imc-ex-altura", altura.toString())
     }
 
-    override fun onStart() {
-        initialize()
+    fun calculaImc(){
+        var imc = peso / (altura * altura)
+        var texto = ""
+        if(imc < 16){
+            texto = "Magreza leve"
+        } else if (imc >= 16 && imc < 17){
+            texto = "Magreza moderada"
+        } else if (imc >= 17 && imc < 18.5) {
+            texto = "Magreza leve"
+        } else if (imc >= 18.5 && imc < 25) {
+            texto = "Saudável"
+        } else if (imc >= 25 && imc < 30) {
+            texto = "Sobrepeso"
+        } else if (imc >= 30 && imc < 35) {
+            texto = "Obesidade Grau I"
+        } else if (imc >= 35 && imc < 40) {
+            texto = "Obesidade Grau II (severa)"
+        } else {
+            texto = "Obseidade Grau III (mórbida)"
+        }
 
-        super.onStart()
+        tvResultadoImc.text = "IMC: $imc"
+        tvResultadoImcTexto.text = texto
+
     }
 }
